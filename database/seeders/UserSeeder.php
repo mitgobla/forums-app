@@ -2,6 +2,8 @@
 
 namespace Database\Seeders;
 
+use App\Models\Community;
+use App\Models\Post;
 use App\Models\User;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
@@ -24,6 +26,6 @@ class UserSeeder extends Seeder
         $user->remember_token = Str::random(10);
         $user->save();
 
-        User::factory()->count(50)->create();
+        User::factory()->count(50)->hasAttached(Community::factory())->has(Post::factory()->count(3))->create();
     }
 }
