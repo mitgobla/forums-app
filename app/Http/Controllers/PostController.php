@@ -15,7 +15,7 @@ class PostController extends Controller
     public function index()
     {
         $posts = Post::paginate(10);
-        return view('posts.index', compact('posts'));
+        return response(view('posts.index', compact('posts')));
     }
 
     /**
@@ -47,7 +47,8 @@ class PostController extends Controller
      */
     public function show(Post $post)
     {
-        //
+        // return the specified post
+        return response(view('posts.show', compact('post')));
     }
 
     /**

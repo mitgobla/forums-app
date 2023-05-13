@@ -31,6 +31,8 @@ Route::middleware('auth')->group(function () {
 
 Route::get('/posts', [PostController::class, 'index']);
 
+Route::get('/posts/{post}', [PostController::class, 'show'])->name('posts.show');
+
 require __DIR__.'/auth.php';
 
 Auth::routes();
