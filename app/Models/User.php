@@ -22,6 +22,11 @@ class User extends Authenticatable
         return $this->hasMany(Post::class);
     }
 
+    public function comments()
+    {
+        return $this->hasManyThrough(Comment::class, Post::class);
+    }
+
     public function communities()
     {
         return $this->belongsToMany(Community::class);
