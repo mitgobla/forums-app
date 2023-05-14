@@ -37,10 +37,10 @@ class RolesAndPermissionsSeeder extends Seeder
         }
 
         $role = Role::create(['name' => 'admin']);
-        $role->givePermissionTo(Permission::all());
+        $role->syncPermissions(Permission::all());
 
         $role = Role::create(['name' => 'user']);
-        $role->givePermissionTo([
+        $role->syncPermissions([
             'create any comment',
             'create any post',
         ]);

@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\PostController;
+use App\Http\Controllers\CommentController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -32,6 +33,8 @@ Route::middleware('auth')->group(function () {
 Route::get('/posts', [PostController::class, 'index']);
 
 Route::get('/posts/{post}', [PostController::class, 'show'])->name('posts.show');
+
+Route::post('/comment', [CommentController::class, 'store']);
 
 require __DIR__.'/auth.php';
 
