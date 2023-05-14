@@ -3,11 +3,17 @@
 @section('title', 'Post')
 
 @section('content')
-    <div class="well">
-        <h3>{{$post->title}}</h3>
-        <small>Written on {{$post->created_at}} by <a href="/users/{{$post->user->id}}">{{$post->user->name}}</a></small>
-        <hr>
-        <p>{{$post->body}}</p>
+    <div class="card">
+        @if($post->image_path)
+            <img src="{{ asset('images/' . $post->image_path) }}" class="card-img-top rounded mx-auto d-block" alt="..." style="max-width:50rem">
+        @endif
+        <div class="card-body">
+            <h3 class="card-title">{{$post->title}}</h3>
+            <h6 class="card-subtitle mb-2 text-muted">Written on {{$post->created_at}} by <a href="/users/{{$post->user->id}}">{{$post->user->name}}</a></h6>
+            <hr>
+            <p ckass="card-text">{{$post->body}}</p>
+        </div>
+    </div>
 
     {{-- add comment box --}}
     @if(Auth::check())
@@ -64,7 +70,6 @@
     @else
         <p>No comments found</p>
     @endif
-    <div id="comments">
 @endsection
 
 @push('bodyScripts')

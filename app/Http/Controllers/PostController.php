@@ -26,7 +26,8 @@ class PostController extends Controller
      */
     public function create()
     {
-        //
+        // return the create post form
+        return response(view('posts.create'));
     }
 
     /**
@@ -37,7 +38,37 @@ class PostController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        // validate the post data
+        $validated = $request->validate([
+            'title' => 'required|max:255',
+            'body' => 'required',
+        ]);
+
+        // create the post
+        $post = new Post;
+        $post->title = $validated['title'];
+        $post->body = $validated['body'];
+        $post->user_id = $request->user_id;
+
+        // validate image if present
+        if ($request->hasFile('image')) {
+            $validated = $request->validate([
+                'image' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+            ]);
+
+            // store the image
+            $imageName = time().'.'.$request->image->extension();
+            $request->image->move(public_path('images'), $imageName);
+
+            // save the image path
+            $post->image_path = $imageName;
+        }
+
+        // save the post
+        $post->save();
+
+        // redirect to the post
+        return redirect()->route('posts.show', $post->id);
     }
 
     /**
