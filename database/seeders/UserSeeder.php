@@ -24,6 +24,7 @@ class UserSeeder extends Seeder
         $user->password = 'password';
         $user->email_verified_at = now();
         $user->remember_token = Str::random(10);
+        $user->assignRole('admin');
         $user->save();
 
         User::factory()->count(50)->hasAttached(Community::factory())->has(Post::factory()->count(3))->create();
