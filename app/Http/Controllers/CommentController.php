@@ -16,14 +16,19 @@ class CommentController extends Controller
      */
     public function store(Request $request)
     {
+        //validate comment
+        $validated = $request->validate([
+            'body' => 'required',
+            'user_id' => 'required',
+            'post_id' => 'required',
+        ]);
+
+        //create comment
         $_comment = new Comment();
-        $_comment->body = $request->input('body');
-        $_comment->user_id = $request->input('user_id');
-        $_comment->post_id = $request->input('post_id');
+        $_comment->body = $validated['body'];
+        $_comment->user_id = $validated['user_id'];
+        $_comment->post_id = $validated['post_id'];
         $_comment->save();
-
-
-
 
         if ($request->ajax()) {
             return response()->json([
