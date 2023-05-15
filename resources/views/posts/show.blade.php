@@ -13,6 +13,9 @@
             <hr>
             <p ckass="card-text">{{$post->body}}</p>
         </div>
+        <div class="card-footer">
+            @include('posts.partials.edit_delete_buttons', ['comment' => $post])
+        </div>
     </div>
 
     {{-- add comment box --}}
