@@ -3,6 +3,7 @@
 namespace Database\Seeders;
 
 use App\Models\Community;
+use App\Models\User;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 
@@ -26,6 +27,22 @@ class CommunityTableSeeder extends Seeder
         $community->users()->attach(1);
 
         Community::factory()->count(10)->create();
+
+        // randomly attach users to communities
+        Community::each(function ($community) {
+            // random amount of users to attach
+            $randomAmount = rand(1, 10);
+            // get all users
+            $users = User::all();
+            // get random users
+            $randomUsers = $users->random($randomAmount);
+            // attach users to community if not already attached
+            $randomUsers->each(function ($user) use ($community) {
+                if (!$community->users->contains($user->id)) {
+                    $community->users()->attach($user->id);
+                }
+            });
+        });
 
     }
 }
