@@ -6,11 +6,11 @@
         @if (auth()->user()->can('delete any post') || auth()->user()->id == $post->user_id)
             <button class="btn btn-danger"
                 onclick="event.preventDefault();
-                        document.getElementById('delete-form').submit();">Delete</button>
+                        document.getElementById('delete-post-{{$post->id}}-form').submit();">Delete</button>
         @endif
     </div>
 
-    <form id="delete-form" action="{{ route('posts.destroy', $post) }}" method="POST" class="d-none">
+    <form id="delete-post-{{$post->id}}-form" action="{{ route('posts.destroy', $post) }}" method="POST" class="d-none">
         @csrf
         @method('DELETE')
     </form>

@@ -20,6 +20,9 @@
                 <div class="d-inline-block mx-2"></div>
                 <span class="bi bi-chat-dots"></span>
                 <small>Comments: {{ count($user->comments) }}</small>
+                <div class="d-inline-block mx-2"></div>
+                <span class="bi bi-hammer"></span>
+                <small>Roles: {{ $user->roles->pluck('name')->implode(', ') }}</small>
             </div>
         </div>
 

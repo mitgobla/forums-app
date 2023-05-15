@@ -6,11 +6,11 @@
         @if (auth()->user()->can('delete any comment') || auth()->user()->id == $comment->user_id)
             <button class="btn btn-danger"
                 onclick="event.preventDefault();
-                        document.getElementById('delete-form').submit();">Delete</button>
+                        document.getElementById('delete-comment-{{$comment->id}}-form').submit();">Delete</button>
         @endif
     </div>
 
-    <form id="delete-form" action="{{ route('comment.destroy', $comment) }}" method="POST" class="d-none">
+    <form id="delete-comment-{{$comment->id}}-form" action="{{ route('comment.destroy', $comment) }}" method="POST" class="d-none">
         @csrf
         @method('DELETE')
     </form>

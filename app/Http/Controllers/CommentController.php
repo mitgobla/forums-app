@@ -91,12 +91,6 @@ class CommentController extends Controller
             //delete comment
             $comment->delete();
 
-            if (request()->ajax()) {
-                return response()->json([
-                    'message' => 'Comment deleted successfully',
-                ]);
-            }
-
-            return redirect()->back();
+            return redirect()->route('posts.show', $comment->post->id);
     }
 }
