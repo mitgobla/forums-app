@@ -17,10 +17,10 @@ class DashboardController extends Controller
     public function index()
     {
         $user = User::find(auth()->user()->id);
-        $posts = $user->posts()->paginate(10, ['*'], 'posts');
+        $posts = $user->posts()->paginate(5, ['*'], 'posts');
 
         // get all comments made by the user
-        $comments = Comment::where('user_id', $user->id)->paginate(10, ['*'], 'comments');
+        $comments = Comment::where('user_id', $user->id)->paginate(5, ['*'], 'comments');
 
         return view('dashboard', compact('user', 'posts', 'comments'));
     }

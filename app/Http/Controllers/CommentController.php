@@ -35,7 +35,7 @@ class CommentController extends Controller
         $comment->post()->associate($post);
         $comment->save();
 
-
+        event(new \App\Events\CommentCreated($comment));
 
         if ($request->ajax()) {
             return response()->json([

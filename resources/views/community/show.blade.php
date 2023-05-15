@@ -11,7 +11,7 @@
             <h3 class="card-title">{{$community->name}}</h3>
             <h6 class="card-subtitle mb-2 text-muted">Created on {{$community->created_at}}</h6>
             <hr>
-            <p ckass="card-text">{{$community->description}}</p>
+            <p class="card-text">{{$community->description}}</p>
         </div>
     </div>
 
