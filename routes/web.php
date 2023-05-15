@@ -6,6 +6,7 @@ use App\Http\Controllers\CommentController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\WelcomeController;
+use App\Http\Controllers\CommunityController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -36,10 +37,16 @@ Route::middleware('auth')->group(function () {
     Route::delete('/posts/{post}', [PostController::class, 'destroy'])->name('posts.destroy');
 
     // Comment routes that require authentication
-    Route::post('/comment', [CommentController::class, 'store']);
+    Route::post('/comment', [CommentController::class, 'store'])->name('comment.store');
     Route::delete('/comment/{comment}', [CommentController::class, 'destroy'])->name('comment.destroy');
     Route::get('/comment/{comment}/edit', [CommentController::class, 'edit'])->name('comment.edit');
     Route::patch('/comment/{comment}', [CommentController::class, 'update'])->name('comment.update');
+
+    // Community routes that require authentication
+    Route::get('/community/create', [CommunityController::class, 'create'])->name('community.create');
+    Route::post('/community', [CommunityController::class, 'store'])->name('community.store');
+    Route::get('/community/{community}/edit', [CommunityController::class, 'edit'])->name('community.edit');
+    Route::patch('/community/{community}', [CommunityController::class, 'update'])->name('community.update');
 });
 
 Route::get('/users', [UserController::class, 'index'])->name('users.index');
@@ -47,6 +54,9 @@ Route::get('/users/{user}', [UserController::class, 'show'])->name('users.show')
 
 Route::get('/posts', [PostController::class, 'index'])->name('posts.index');
 Route::get('/posts/{post}', [PostController::class, 'show'])->name('posts.show');
+
+Route::get('/community', [CommunityController::class, 'index'])->name('community.index');
+Route::get('/community/{community}', [CommunityController::class, 'show'])->name('community.show');
 
 require __DIR__.'/auth.php';
 

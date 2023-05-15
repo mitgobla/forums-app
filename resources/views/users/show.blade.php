@@ -22,6 +22,24 @@
         </div>
 
         <div class="p-3">
+            <h1>Communities</h1>
+            @if(count($communities) > 0)
+                <div class="d-flex">
+                @foreach ($communities as $community)
+                    <figure class="figure px-1">
+                        <a href="/community/{{ $community->id }}">
+                            <img src="{{ $community->image }}" class="figure-img img-fluid rounded" alt="..."
+                                style="max-width:5rem">
+                        </a>
+                        <figcaption class="figure-caption text-center">{{ $community->name }}</figcaption>
+                    </figure>
+                @endforeach
+                </div>
+            @else
+                <p>No communities found</p>
+            @endif
+            {{-- line --}}
+            <hr class="my-4">
             {{-- with pagination --}}
             <h1>Posts</h1>
             @if (count($posts) > 0)
@@ -55,7 +73,7 @@
             <h1>Comments</h1>
             @if (count($comments) > 0)
                 @foreach ($comments as $comment)
-                    @include('comments.partials.comment_card', ['comment' => $comment])
+                    @include('comments.partials.comment_card', ['comment' => $comment, 'showPost' => true])
                 @endforeach
                 <div class="pt-3 d-flex justify-content-center">
                     {{ $comments->links() }}

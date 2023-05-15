@@ -6,5 +6,10 @@
     {{-- edit and delete buttons --}}
     <div class="card-footer">
         @include('comments.partials.edit_delete_buttons', ['comment' => $comment])
+        @if(isset($showPost))
+            @if($showPost)
+                <a href="/posts/{{$comment->post->id}}" class="card-link">See Post</a>
+            @endif
+        @endif
     </div>
 </div>

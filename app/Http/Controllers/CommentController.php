@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Models\Comment;
+use App\Models\Post;
+use App\Models\User;
 use Illuminate\Http\Request;
 
 class CommentController extends Controller
@@ -26,9 +28,14 @@ class CommentController extends Controller
         //create comment
         $comment = new Comment();
         $comment->body = $validated['body'];
-        $comment->user_id = $validated['user_id'];
-        $comment->post_id = $validated['post_id'];
+
+        $user = User::find($validated['user_id']);
+        $post = Post::find($validated['post_id']);
+        $comment->user()->associate($user);
+        $comment->post()->associate($post);
         $comment->save();
+
+
 
         if ($request->ajax()) {
             return response()->json([
