@@ -23,6 +23,9 @@
                 <div class="d-inline-block mx-2"></div>
                 <span class="bi bi-hammer"></span>
                 <small>Roles: {{ $user->roles->pluck('name')->implode(', ') }}</small>
+                <div class="d-inline-block mx-2"></div>
+                <span class="bi bi-clouds"></span>
+                <small>Weather: {{ $weather['current']['condition']['text'] }}</small>
             </div>
         </div>
 
