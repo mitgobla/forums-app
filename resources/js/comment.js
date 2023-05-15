@@ -21,8 +21,15 @@ document.querySelector('#comment-form').addEventListener('submit', function(e) {
     .then(response => response.json())
     .then(data => {
         // if successfull, add the comment to the list
-        if (data.success) {
+        if (data.message === 'Comment created successfully') {
             console.log(data);
+            document.querySelector('#comment-alert')?.remove();
+            let alertElement = document.createElement('div');
+            alertElement.className = 'alert alert-success';
+            alertElement.id = 'comment-alert';
+            alertElement.innerText = data.message;
+            document.querySelector('#comment-form').prepend(alertElement);
+
             let commentsContainer = document.querySelector('#comments-container');
             let commentElement = document.createElement('div');
             commentElement.className = 'card p-2';
@@ -34,10 +41,11 @@ document.querySelector('#comment-form').addEventListener('submit', function(e) {
             commentBody.className = 'card-text';
             commentBody.innerText = data.comment_body;
             commentElement.appendChild(commentBody);
-            commentsContainer.appendChild(commentElement);
+            commentsContainer.insertBefore(commentElement, commentsContainer.firstChild);
         } else {
             // show a bootstrap alert with the error
             // delete the previous alert if it exists
+            console.log(data)
             document.querySelector('#comment-alert')?.remove();
             let alertElement = document.createElement('div');
             alertElement.className = 'alert alert-danger';

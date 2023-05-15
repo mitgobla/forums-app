@@ -45,7 +45,7 @@
     <div id="comments-container">
     @if(count($post->comments) > 0)
         <h3>Comments</h3>
-        @foreach($post->comments as $comment)
+        @foreach($post->comments->reverse() as $comment)
             <div class="card p-2">
                 <h6 class="card-subtitle mb-2 text-muted">Written on {{$comment->created_at->diffForHumans()}} by <a href="/users/{{$comment->user->id}}">{{$comment->user->name}}</a></h6>
                 <p class="card-text">{{$comment->body}}</p>

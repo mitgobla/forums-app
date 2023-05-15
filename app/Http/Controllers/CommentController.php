@@ -18,7 +18,7 @@ class CommentController extends Controller
     {
         //validate comment
         $validated = $request->validate([
-            'body' => 'required',
+            'body' => 'required|max:1000',
             'user_id' => 'required',
             'post_id' => 'required',
         ]);
@@ -39,6 +39,7 @@ class CommentController extends Controller
                 'comment_created_at' => $_comment->created_at->diffForHumans(),
             ]);
         }
+
 
         return redirect()->back();
     }
