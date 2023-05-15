@@ -31,17 +31,14 @@ document.querySelector('#comment-form').addEventListener('submit', function(e) {
             document.querySelector('#comment-form').prepend(alertElement);
 
             let commentsContainer = document.querySelector('#comments-container');
-            let commentElement = document.createElement('div');
-            commentElement.className = 'card p-2';
-            let commentSubtitle = document.createElement('h6');
-            commentSubtitle.className = 'card-subtitle mb-2 text-muted';
-            commentSubtitle.innerHTML = 'Written on ' + data.comment_created_at + ' by <a href="/users/' + data.comment_user_id + '">' + data.comment_user + '</a>';
-            commentElement.appendChild(commentSubtitle);
-            let commentBody = document.createElement('p');
-            commentBody.className = 'card-text';
-            commentBody.innerText = data.comment_body;
-            commentElement.appendChild(commentBody);
+
+            let commentHTML = data.comment_template;
+            // convert the string to a DOM element
+            let commentElement = document.createRange().createContextualFragment(commentHTML);
+            // add the comment to the list
             commentsContainer.insertBefore(commentElement, commentsContainer.firstChild);
+            // clear the comment field
+            e.target.elements.comment.value = '';
         } else {
             // show a bootstrap alert with the error
             // delete the previous alert if it exists
@@ -62,3 +59,4 @@ document.querySelector('#comment-form').addEventListener('submit', function(e) {
         document.querySelector('#comment-form').prepend(alertElement);
     })
 });
+

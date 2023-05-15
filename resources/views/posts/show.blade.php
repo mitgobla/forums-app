@@ -42,30 +42,11 @@
     @endif
 
     {{-- list of comments --}}
+    <h3>Comments</h3>
     <div id="comments-container">
     @if(count($post->comments) > 0)
-        <h3>Comments</h3>
         @foreach($post->comments->reverse() as $comment)
-            <div class="card p-2">
-                <h6 class="card-subtitle mb-2 text-muted">Written on {{$comment->created_at->diffForHumans()}} by <a href="/users/{{$comment->user->id}}">{{$comment->user->name}}</a></h6>
-                <p class="card-text">{{$comment->body}}</p>
-                {{-- edit and delete buttons --}}
-                @if(!Auth::guest())
-                    @if(auth()->user()->can('update any comment') || auth()->user()->id == $comment->user_id)
-                        <form action="/comments/{{$comment->id}}/edit" method="GET" class="d-inline">
-                            @csrf
-                            <button type="submit" class="btn btn-primary">Edit</button>
-                        </form>
-                    @endif
-                    @if(auth()->user()->can('delete any comment') || auth()->user()->id == $comment->user_id)
-                        <form action="/comments/{{$comment->id}}" method="POST" class="d-inline">
-                            @csrf
-                            @method('DELETE')
-                            <button type="submit" class="btn btn-danger">Delete</button>
-                        </form>
-                    @endif
-                @endif
-            </div>
+            @include('comments.partials.comment_card', ['comment' => $comment])
         @endforeach
     @else
         <p>No comments found</p>

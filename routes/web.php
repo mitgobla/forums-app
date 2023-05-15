@@ -33,6 +33,12 @@ Route::middleware('auth')->group(function () {
     Route::post('/posts', [PostController::class, 'store'])->name('posts.store');
     Route::get('/posts/{post}/edit', [PostController::class, 'edit'])->name('posts.edit');
     Route::patch('/posts/{post}', [PostController::class, 'update'])->name('posts.update');
+
+    // Comment routes that require authentication
+    Route::post('/comment', [CommentController::class, 'store']);
+    Route::delete('/comment/{comment}', [CommentController::class, 'destroy'])->name('comment.destroy');
+    Route::get('/comment/{comment}/edit', [CommentController::class, 'edit'])->name('comment.edit');
+    Route::patch('/comment/{comment}', [CommentController::class, 'update'])->name('comment.update');
 });
 
 Route::get('/users', [UserController::class, 'index'])->name('users.index');
@@ -40,8 +46,6 @@ Route::get('/users/{user}', [UserController::class, 'show'])->name('users.show')
 
 Route::get('/posts', [PostController::class, 'index'])->name('posts.index');
 Route::get('/posts/{post}', [PostController::class, 'show'])->name('posts.show');
-
-Route::post('/comment', [CommentController::class, 'store']);
 
 require __DIR__.'/auth.php';
 

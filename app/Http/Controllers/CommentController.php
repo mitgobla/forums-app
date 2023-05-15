@@ -24,19 +24,20 @@ class CommentController extends Controller
         ]);
 
         //create comment
-        $_comment = new Comment();
-        $_comment->body = $validated['body'];
-        $_comment->user_id = $validated['user_id'];
-        $_comment->post_id = $validated['post_id'];
-        $_comment->save();
+        $comment = new Comment();
+        $comment->body = $validated['body'];
+        $comment->user_id = $validated['user_id'];
+        $comment->post_id = $validated['post_id'];
+        $comment->save();
 
         if ($request->ajax()) {
             return response()->json([
                 'message' => 'Comment created successfully',
-                'comment_body' => $_comment->body,
-                'comment_user' => $_comment->user->name,
-                'comment_user_id' => $_comment->user->id,
-                'comment_created_at' => $_comment->created_at->diffForHumans(),
+                'comment_body' => $comment->body,
+                'comment_user' => $comment->user->name,
+                'comment_user_id' => $comment->user->id,
+                'comment_created_at' => $comment->created_at->diffForHumans(),
+                'comment_template' => view('comments.partials.comment_card', compact('comment'))->render(),
             ]);
         }
 
@@ -53,7 +54,7 @@ class CommentController extends Controller
     public function edit(Comment $comment)
     {
 
-            return view('comments.edit', compact('comment'));
+            return response(view('comments.edit', compact('comment')));
     }
 
     /**
@@ -65,7 +66,17 @@ class CommentController extends Controller
      */
     public function update(Request $request, Comment $comment)
     {
-        //
+
+        //validate comment
+        $validated = $request->validate([
+            'body' => 'required|max:1000',
+        ]);
+
+        //update comment
+        $comment->body = $validated['body'];
+        $comment->save();
+
+        return redirect()->route('posts.show', $comment->post_id);
     }
 
     /**
@@ -76,6 +87,16 @@ class CommentController extends Controller
      */
     public function destroy(Comment $comment)
     {
-        //
+
+            //delete comment
+            $comment->delete();
+
+            if (request()->ajax()) {
+                return response()->json([
+                    'message' => 'Comment deleted successfully',
+                ]);
+            }
+
+            return redirect()->back();
     }
 }
