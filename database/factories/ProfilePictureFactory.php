@@ -18,8 +18,8 @@ class ProfilePictureFactory extends Factory
     public function definition()
     {
         return [
-            'path' => fake()->imageUrl(),
-            'user_id' => fake()->unique()->numberBetween(1, User::count()),
+            'path' => fake()->imageUrl(480, 480, 'animals', true),
+            'user_id' => User::factory(),
         ];
     }
 }

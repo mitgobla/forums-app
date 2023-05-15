@@ -3,6 +3,7 @@
 namespace Database\Seeders;
 
 use App\Models\ProfilePicture;
+use App\Models\User;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 
@@ -20,6 +21,13 @@ class ProfilePictureSeeder extends Seeder
         $profilePicture->user_id = 1;
         $profilePicture->save();
 
-        ProfilePicture::factory()->count(50)->create();
+        $faker = \Faker\Factory::create();
+        User::each(function ($user) use ($faker) {
+            $profilePicture = new ProfilePicture;
+            $profilePicture->path = $faker->imageUrl(480, 480, 'animals', true);
+            $profilePicture->user_id = $user->id;
+            $profilePicture->save();
+        }
+        );
     }
 }

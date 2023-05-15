@@ -11,6 +11,9 @@
         </div>
         @foreach($users as $user)
             <div class="card flex-row flex-wrap p-2 mt-1">
+                @if($user->profilePicture)
+                    <img src="{{ $user->profilePicture->path }}" class="card-img-top rounded mx-auto d-block" alt="..." style="max-width:5rem">
+                @endif
                 <div class="card-body">
                     <h3 class="card-title"><a href="/users/{{$user->id}}">{{$user->name}}</a></h3>
                 </div>

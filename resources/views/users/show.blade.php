@@ -6,6 +6,10 @@
     <div class="card">
         <div class="card-body">
             <div class="card-body">
+                @if ($user->profilePicture)
+                    <img src="{{ $user->profilePicture->path }}" class="card-img-top rounded mx-auto d-block"
+                        alt="..." style="max-width:10rem">
+                @endif
                 <h1 class="card-title">{{ $user->name }}</h1>
             </div>
             <div class="card-footer w-100 text-muted">
